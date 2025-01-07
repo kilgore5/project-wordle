@@ -1,15 +1,6 @@
 import React from 'react';
 
-import Banner from '../Banner';
-
-import { PLAYING, WIN, LOSE } from '../../constants';
-
-function GuessInput({
-  gameState,
-  answer,
-  handleGuessSubmission,
-  checkWinOrLose,
-}) {
+function GuessInput({ gameState, handleGuessSubmission }) {
   const [tentativeGuess, setTentativeGuess] = React.useState('');
 
   function handleChange(event) {
@@ -22,13 +13,11 @@ function GuessInput({
     console.log({ tentativeGuess });
     handleGuessSubmission(tentativeGuess);
     setTentativeGuess('');
-    checkWinOrLose(tentativeGuess);
   }
 
   return (
     <form onSubmit={handleSubmit} className="guess-input-wrapper">
       <label htmlFor="guess-input">Enter guess:</label>
-      <Banner gameState={gameState} answer={answer} />
       <input
         id="guess-input"
         type="text"
@@ -39,7 +28,7 @@ function GuessInput({
         pattern="[A-Za-z]{5}"
         title="5 alphabetical characters"
         required
-        disabled={[WIN, LOSE].includes(gameState)}
+        disabled={gameState !== 'running'}
       />
     </form>
   );
